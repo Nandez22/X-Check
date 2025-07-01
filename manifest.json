@@ -1,0 +1,15 @@
+{
+    "manifest_version" : 2,
+    "name" : "x-Test",
+    "version" : "0.1",
+    "description" : "An actually usable x-path tester for Fire Fox?",
+    
+    "background" : {
+        "scripts" : ["background.js"]
+    },
+
+    "browser_action" : {
+        "default_title" : "X-Test",
+        "default_popup" : "popup.html"
+    }
+}
