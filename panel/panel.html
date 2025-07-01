@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>X-Test</title>
+        <link rel="stylesheet" href="panel.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=content_copy" rel="stylesheet"/>
+    </head>
+    <body>
+        <H3>X-Test</H3>
+
+        <div class="inputs">
+            <div class="inline">
+                <input class="textField boxed" type="text" id="xPath-Input" placeholder="xPath">
+                <button class="confirm" id="confirm">&#10132;</button>
+            </div>
+
+            <table class="boxed">
+                <tr class="result inline boxed">
+                    <button class="confirm material-symbols-outlined">content_copy</button>
+                    <span>div class='something'</span>
+                </tr>
+
+                <tr class="result inline boxed">
+                    <button class="confirm material-symbols-outlined">content_copy</button>
+                    <span>div class='something'</span>
+                </tr>
+            </table>
+        </div>
+
+        <script type="module" src="panel.js"></script>
+    </body>
+</html>

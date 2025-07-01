@@ -1,0 +1,21 @@
+.xCheck-Wrapper {
+    display: flex;
+    flex-direction: row;
+    
+    width: 100vw;
+    height: 100vh;
+
+    background-color: aquamarine;
+}
+
+.xCheck-Panel {
+    width: 2000px;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.xCheck-Content-Wrapper {
+    flex-grow: 1;
+    height: 100vh;
+    overflow-y: auto;
+}

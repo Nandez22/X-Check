@@ -1,15 +1,35 @@
 {
-    "manifest_version" : 2,
-    "name" : "x-Test",
-    "version" : "0.1",
-    "description" : "An actually usable x-path tester for Fire Fox?",
-    
-    "background" : {
-        "scripts" : ["background.js"]
+    "manifest_version": 2,
+    "name": "X-Test",
+    "version": "0.1",
+    "description": "An actually usable XPath tester for Firefox?",
+  
+    "background": {
+      "scripts": [
+        "scripts/background.js",
+        "links.js"
+      ]
+    },
+  
+    "browser_action": {
+      "default_title": "X-Test"
     },
 
-    "browser_action" : {
-        "default_title" : "X-Test",
-        "default_popup" : "popup.html"
-    }
-}
+    "sidebar_action": {
+      "default_title": "X-Test",
+      "default_panel": "panel/panel.html"
+    },
+    
+    "permissions": [
+      "tabs",
+      "activeTab"
+    ],
+  
+    "web_accessible_resources": [
+      "panel/panel.html",
+      "panel/panel.css",
+      "panel/panel.js",
+
+      "globalStyles/xCheckWrapper.css"
+    ]
+  }
