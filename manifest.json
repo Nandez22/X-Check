@@ -6,8 +6,7 @@
   
     "background": {
       "scripts": [
-        "scripts/background.js",
-        "links.js"
+        "scripts/background.js"
       ]
     },
   
@@ -29,6 +28,7 @@
       "panel/panel.html",
       "panel/panel.css",
       "panel/panel.js",
+      "panel/panelUtils.js",
 
       "globalStyles/xCheckWrapper.css"
     ]
