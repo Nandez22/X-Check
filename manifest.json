@@ -9,6 +9,13 @@
         "scripts/background.js"
       ]
     },
+
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["scripts/xCheckAgent.js"]
+      }
+    ],
   
     "browser_action": {
       "default_title": "X-Test"
@@ -21,7 +28,8 @@
     
     "permissions": [
       "tabs",
-      "activeTab"
+      "activeTab",
+      "*://*/*"
     ],
   
     "web_accessible_resources": [
