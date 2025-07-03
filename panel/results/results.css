@@ -1,0 +1,23 @@
+body {
+    background-color: fuchsia;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: green;
+}
+
+.result-text {
+    color: red;
+    font-size: 20px;
+    font-family: "Inter";
+
+    flex: 1;
+}
+
+.copy-side-button {
+    background-color: blue
+}
