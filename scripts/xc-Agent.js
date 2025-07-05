@@ -10,6 +10,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         let resultsPackage = handleResults(results);
 
         sendResponse(resultsPackage);
+        return true
     }
 });
 
@@ -59,7 +60,7 @@ function serializeNode(node) {
     }
 }
 
-function packageItterators(results) {
+function packageIterators(results) {
     const nodes = [];
     let node;
 
@@ -85,7 +86,6 @@ function packageSnapshots(results) {
 
     return serialized;
 }
-
 
 function evalXPath(xPath) {
     try {
@@ -117,7 +117,7 @@ function handleResults(results) {
 
         case XPathResult.ORDERED_NODE_ITERATOR_TYPE:
         case XPathResult.UNORDERED_NODE_ITERATOR_TYPE:
-            data = packageItterators(results);
+            data = packageIterators(results);
             break;
         
         case XPathResult.ORDERED_NODE_SNAPSHOT_TYPE:
@@ -132,10 +132,10 @@ function handleResults(results) {
 
         default:
             console.warn("Unhandled XPathResult Type: ", results.resultType);
-            break;
+            return { type: null, data: null };
     }
 
-    resultPackage = {
+    let resultPackage = {
         type: results.resultType,
         data: data
     }

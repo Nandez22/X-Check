@@ -9,9 +9,19 @@
 
 
     --height: 100px;
-    --width: 300px;
 }
 
+H3 {
+    color: white;
+    font-size: 30px;
+    font-family: "Inter";
+    font-style: italic;
+
+    margin-top: 30px;
+    margin-bottom: 20px;
+
+    text-align: center;
+}
 
 .boxed {
     background-image: var(--darkGradient);
@@ -24,115 +34,128 @@
 body {
     background: var(--dark);
 
-    min-height: 300px;
-    min-width: 400px;
-    border-radius: 10px;
-
-    margin: 0;
-
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
 }
 
-.result {
-    color: var(--lightText);
-    font-size: 15px;
-    font-family: "Inter";
-}
-
-.result-block {
-    height: 50px;
-    width: 100%;
-    padding: 0px 10px;
-    min-height: 50px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-}
-
-H3 {
-    color: white;
-    font-size: 50px;
-    font-family: "Inter";
-    font-style: italic;
-
-    margin-top: 30px;
-    margin-bottom: 20px;
-
-    text-align: center;
-}
-
 .inline {
     display: flex;
-    position: relative;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 
-    padding: 15px;
+    width: 100%
 }
 
-.options {
-    gap: 20px;
-
+.vertical {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    
+}
+
+#results {
+    width: 85%;
+    height: 250px;
+    padding-top: 25px;
+
+    border: none;
+}
+
+.xpath-input {
+    width: 85%;
+    border-radius: 6px;
+
+    position: relative;
+    overflow: hidden;
+    position: flex;
+    align-items: center;
+}
+
+.xpath-input:focus-within {
+    outline: 2px solid #3d3d3d;
+    box-shadow: 0px 0px 15px #232323;
 }
 
 .textField {
-    height: var(--height);
-    width: 300px;
+    height: 100px;
+    width: 85%;
 
     color: var(--greyText);
-    
+    background-color: transparent;
+
     font-family: 'Roboto Mono', monospace;
     font-size: 20px;
     font-weight: 500;
 
+    border: none;
+    outline: none;
+
     cursor: pointer;
 
+    flex: 1;
     padding: 10px 25px;
     position: relative;
     display: block;
     box-sizing: border-box;
-
 }
 
-.option {
-    height: 30px;
-    width: 100px;
-    border-radius: 15px;
+.drop {
+    width: 100%;
+    height: 16px;
 
-    color: white;
-    font-size: 14px;
-    font-weight: 500;
-    font-style: normal;
-    font-family: "Inter";
-    text-align: center;
+    font-size: 16px;
+    line-height: 16px;
 
-    background-image: radial-gradient(#161616 45%, #161616 25%, #161515);
+    padding: 0;
+    margin: 0;
 
-    border: 2px solid #141414;
-    box-shadow: 0 0 4px #000000;
+    right: 0;
+    bottom: 0;
+
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-button {
+    height: 100px;
+    width: 60px;
+
+    color: var(--greyText);
+    background-color: transparent;
+
+    border: none;
+    outline: none;
 
     cursor: pointer;
-
-    display: inline-block;
-    position: relative;
-    box-sizing: border-box;
-}
-
-.small-button {
-    height: 100%;
-    width: 30px;
-    border-radius: 2px;
-}
-
-
-button {
-    color: #ffff;
     
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: background 0.2s ease;
+}
+
+.icon-button:hover {
+    color: #0b2ce2;
+}
+
+.icon-button:active {
+    color: #1665cc
+}
+
+
+
+.gradButton {
+    color: white;
+
     background-image: radial-gradient(#0d5ac0 45%, #025bc0 25%, #1232e2);
     
     font-family: 'Lato', sans-serif;
@@ -151,12 +174,12 @@ button {
     transition: all 0.2s ease;
 }
 
-button:hover {
+.gradButton:hover {
     background-image: radial-gradient(#1665cc 45%, #1169ce 25%, #0b2ce2);
     transform: translateX(1px)
 }
  
-button:active {
+.gradButton:active {
     background-image: radial-gradient(#4690f1 45%, #3991e4 25%, #1c58c7);
     right: 1px;
 }
