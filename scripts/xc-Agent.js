@@ -2,9 +2,12 @@
 console.log("xCheckAgent.js loaded");
 injectStylesheet('resources/xc-styles.css');
 
+var elementId = 0;
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.data.type === "evalXPath") {
         removeHighlights();
+        resetUIDs();
 
         let results = evalXPath(message.data.xPath)
         let resultsPackage = handleResults(results);
@@ -22,10 +25,13 @@ function serializeNode(node) {
         case(Node.ELEMENT_NODE):
             data = {
                 tagName: node.tagName,
+                // While I hate to modify the DOM before serialization and then filter out the added attribute, it's the simplest way to do this.
+                // I really hate it but the re-write required to do it 'better' would be pretty significant.
                 attributes: Array.from(node.attributes).map(a => ({
                     name: a.name,
                     value: a.value
-                }))
+                })),
+                UID: elementId++
             }
             break;
 
@@ -51,6 +57,7 @@ function serializeNode(node) {
             break;
 
         default:
+            console.warn("Unhandled Node type: ", node.nodeType);
             break;
     }
 
@@ -64,15 +71,12 @@ function packageIterators(results) {
     const nodes = [];
     let node;
 
-    while((node = results.iterateNext())) {
-        nodes.push(node);
+    while((node = results.iterateNext())) { 
+        nodes.push(node); 
     }
-
-    const serialized = nodes.map(node => serializeNode(node))
-    nodes.forEach(highlightElement);
-
-    return serialized;
+    return packageHelper(nodes);
 }
+
 
 function packageSnapshots(results) {
     const nodes = [];
@@ -80,11 +84,17 @@ function packageSnapshots(results) {
     for(let i = 0; i < results.snapshotLength; i++){
         nodes.push(results.snapshotItem(i));
     }
+    return packageHelper(nodes);
+}
 
-    const serialized = nodes.map(node => serializeNode(node))
-    nodes.forEach(highlightElement);
-
-    return serialized;
+function packageHelper(nodes) {
+    let sNode;
+    return nodes.map(node => {
+        sNode = serializeNode(node);
+        applyUID(node, sNode.data.UID);
+        highlightElement(node);
+        return sNode;
+    })
 }
 
 function evalXPath(xPath) {
@@ -144,9 +154,9 @@ function handleResults(results) {
 }
 
 
-function highlightElement(element) {
-    if(!element || element.nodeType != Node.ELEMENT_NODE) return;
-    element.classList.add('xc-highlight');
+function highlightElement(node) {
+    if(!node || node.nodeType != Node.ELEMENT_NODE) return;
+    node.classList.add('xc-highlight');
 }
 
 function removeHighlight(element) {
@@ -159,6 +169,21 @@ function removeHighlights() {
     highlightedElements.forEach(element => {
         removeHighlight(element);
     });
+}
+
+function applyUID(node, id){
+    if(!node || node.nodeType != Node.ELEMENT_NODE) return;
+
+    node.setAttribute('xc-id', id)
+}
+
+function resetUIDs(){
+    let elements = document.querySelectorAll('[xc-id]');
+    elements.forEach(e => {
+        e.removeAttribute('xc-id');
+    });
+
+    elementId = 0;
 }
 
 function injectStylesheet(path) {

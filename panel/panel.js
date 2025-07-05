@@ -35,7 +35,7 @@ function displayResult(result) {
 
     const text = doc.createElement('span');
     text.className = 'result-text';
-    text.textContent = result.tagName;
+    text.textContent = result.UID;
     
     const button = doc.createElement('button');
     button.classList.add('copy-side-button');
@@ -65,7 +65,7 @@ function unpackNodes(nodes) {
 
             case(Node.PROCESSING_INSTRUCTION_NODE):
         }
-    })
+    });
 }
 
 //TODO figure out what the fuck you are going to do with non element types
