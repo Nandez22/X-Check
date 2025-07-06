@@ -5,3 +5,11 @@ body .xc-highlight {
   border-style: solid !important;
   border-color: #1232e2 !important;
 }
+
+body .xc-highlight.xc-emphasis {
+  border-width: 7px !important;
+  border-radius: inherit !important;
+
+  border-style: solid !important;
+  border-color: #e21212 !important;
+}

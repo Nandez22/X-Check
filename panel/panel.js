@@ -1,6 +1,6 @@
-const iframe = document.getElementById('results');
-const doc = iframe.contentDocument || iframe.contentWindow.document;
-const resultsContainer = doc.getElementById('results-container')
+
+let doc;
+let resultsContainer;
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -10,15 +10,77 @@ document.addEventListener("DOMContentLoaded", () => {
         const xPath = input.value;
         sendEvalRequest(xPath);
     });
+
+
+    const iframe = document.getElementById('results');
+
+    iframe.addEventListener('load', () => {
+        doc = iframe.contentDocument || iframe.contentWindow.document;
+        resultsContainer = doc.getElementById('results-container');
+
+        resultsContainer.addEventListener('mouseover', e=> {
+            const row = e.target.closest('.result-row');
+
+            if(row){ 
+                row.classList.add('hover');
+                sendEmphasizeRequest(row);
+            }
+        });
+        
+        resultsContainer.addEventListener('mouseout', e => {
+            const row = e.target.closest('.result-row');
+
+            if(row){ 
+                row.classList.remove('hover'); 
+                if(!row.classList.contains('active')) {
+                    sendRemoveEmphasisRequest(row);
+                }
+            }
+        })
+        
+        resultsContainer.addEventListener('click', e => {
+            const row = e.target.closest('.result-row');
+        
+            if(row){ 
+                if(!row.classList.contains('active')) {
+                    row.classList.add('active');
+                    sendEmphasizeRequest(row); 
+                }
+                else {
+                    row.classList.remove('active');
+                    sendRemoveEmphasisRequest(row);
+                }
+            }
+        });
+    });    
 });
 
-function sendEvalRequest(xPath){
-    let data = {
+function sendEvalRequest(xPath) {
+    sendQuery({
         type: "evalXPath",
-        xPath: xPath
-    };  
+        value: xPath
+    });
+}
 
-    sendQuery(data);
+function sendEmphasizeRequest(row) {
+    const UID = row.getAttribute('xc-id');
+    if(!UID) return;
+
+    sendQuery({
+        type: "emphasizeElement",
+        value: UID
+    });
+
+}
+
+function sendRemoveEmphasisRequest(row) {
+    const UID = row.getAttribute('xc-id');
+    if(!UID) return;
+
+    sendQuery({
+        type: "removeEmphasis",
+        value: UID
+    });
 }
 
 function sendQuery(data){
@@ -32,6 +94,8 @@ function sendQuery(data){
 function displayResult(result) {
     const container = doc.createElement('div');
     container.className = 'result-row';
+    container.setAttribute('xc-id', result.UID);
+
 
     const text = doc.createElement('span');
     text.className = 'result-text';
@@ -49,11 +113,13 @@ function displayResult(result) {
 
 function unpackNodes(nodes) {
     if(!nodes) return;
+    let elements = [];
+
 
     nodes.forEach(node => {
         switch(node.nodeType) {
             case(Node.ELEMENT_NODE):
-                displayResult(node.data)
+                elements.push(node.data)
                 break;
 
             case(Node.STRING_TYPE):
@@ -64,16 +130,18 @@ function unpackNodes(nodes) {
                 break;
 
             case(Node.PROCESSING_INSTRUCTION_NODE):
+                break;
         }
     });
+
+    resultsContainer.innerHTML = '';
+    elements.forEach(displayResult)
 }
 
 //TODO figure out what the fuck you are going to do with non element types
 //For every query we want to reset result display 
 
 function handleResponse(response) {
-    resultsContainer.innerHTML = '';
-
     if(!response || !response.type) {
         console.log("SomethingWrong")
         return;

@@ -9,11 +9,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         removeHighlights();
         resetUIDs();
 
-        let results = evalXPath(message.data.xPath)
+        let results = evalXPath(message.data.value)
         let resultsPackage = handleResults(results);
 
         sendResponse(resultsPackage);
         return true
+    }
+
+    if(message.data.type === "emphasizeElement") {
+        emphasizeElement(message.data.value);
+    }
+
+    if(message.data.type === "removeEmphasis") {
+        removeEmphasis(message.data.value);
     }
 });
 
@@ -91,8 +99,11 @@ function packageHelper(nodes) {
     let sNode;
     return nodes.map(node => {
         sNode = serializeNode(node);
-        applyUID(node, sNode.data.UID);
-        highlightElement(node);
+
+        if(node && node.nodeType == Node.ELEMENT_NODE){
+            applyUID(node, sNode.data.UID);
+            highlightElement(node);
+        }
         return sNode;
     })
 }
@@ -155,12 +166,10 @@ function handleResults(results) {
 
 
 function highlightElement(node) {
-    if(!node || node.nodeType != Node.ELEMENT_NODE) return;
     node.classList.add('xc-highlight');
 }
 
 function removeHighlight(element) {
-    if(!element) return;
     element.classList.remove('xc-highlight');
 }
 
@@ -168,12 +177,11 @@ function removeHighlights() {
     let highlightedElements = document.querySelectorAll('.xc-highlight');
     highlightedElements.forEach(element => {
         removeHighlight(element);
+        element.classList.remove('xc-emphasis');
     });
 }
 
-function applyUID(node, id){
-    if(!node || node.nodeType != Node.ELEMENT_NODE) return;
-
+function applyUID(node, id) {
     node.setAttribute('xc-id', id)
 }
 
@@ -184,6 +192,25 @@ function resetUIDs(){
     });
 
     elementId = 0;
+}
+
+function emphasizeElement(UID) {
+    if(!UID) return;
+    let element = document.querySelector(`[xc-id="${UID}"]`);
+    if(element){
+        element.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'center'
+        });
+
+        element.classList.add('xc-emphasis');
+    }
+}
+
+function removeEmphasis(UID) {
+    if(!UID) return;
+    let element = document.querySelector(`[xc-id="${UID}"]`);
+    element.classList.remove('xc-emphasis');
 }
 
 function injectStylesheet(path) {
