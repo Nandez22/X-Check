@@ -18,11 +18,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     if(message.data.type === "emphasizeElement") {
         emphasizeElement(message.data.value);
+        sendResponse(true);
     }
 
     if(message.data.type === "removeEmphasis") {
         removeEmphasis(message.data.value);
+        sendResponse(true);
     }
+
+    return true;
 });
 
 //TODO assign UID to each node for individual selections (will be reset and cleared per-search)

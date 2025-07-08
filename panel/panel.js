@@ -1,6 +1,13 @@
 
 let doc;
 let resultsContainer;
+const icons = [
+    'VISIBILITY',
+    'GROUP_WORK',
+    'HDR_AUTO',
+    'ADS_CLICK',
+    'STROKE_FULL'
+];
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -21,8 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
         resultsContainer.addEventListener('mouseover', e=> {
             const row = e.target.closest('.result-row');
 
-            if(row){ 
-                row.classList.add('hover');
+            if(row){
                 sendEmphasizeRequest(row);
             }
         });
@@ -30,8 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
         resultsContainer.addEventListener('mouseout', e => {
             const row = e.target.closest('.result-row');
 
-            if(row){ 
-                row.classList.remove('hover'); 
+            if(row){
                 if(!row.classList.contains('active')) {
                     sendRemoveEmphasisRequest(row);
                 }
@@ -39,9 +44,20 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         
         resultsContainer.addEventListener('click', e => {
+            const showAttributes = e.target.closest('.show-attributes');
+            const rowBody = e.target.closest('.result-row-body');
+
+            if(showAttributes) {
+                const attributes = rowBody.querySelector('.attributes');
+                var expanded = showAttributes.getAttribute('aria-expanded') === 'true';
+
+                showAttributes.setAttribute('aria-expanded', String(!expanded));
+                attributes.setAttribute('aria-hidden', String(expanded))
+                return;
+            }
+
             const row = e.target.closest('.result-row');
-        
-            if(row){ 
+            if(rowBody) { 
                 if(!row.classList.contains('active')) {
                     row.classList.add('active');
                     sendEmphasizeRequest(row); 
@@ -92,22 +108,59 @@ function sendQuery(data){
 }
 
 function displayResult(result) {
-    const container = doc.createElement('div');
-    container.className = 'result-row';
-    container.setAttribute('xc-id', result.UID);
+    const article = doc.createElement('article');
+    article.className = 'result-row';
+    article.setAttribute('xc-id', result.UID);
 
-
-    const text = doc.createElement('span');
+    const body = doc.createElement('div');
+    body.className = 'result-row-body';
+    
+    const text = doc.createElement('div');
     text.className = 'result-text';
-    text.textContent = result.UID;
+
+    const title = doc.createElement('h3');
+    title.className = 'result-title';
+    title.textContent = result.UID;
+
+    const toggle = doc.createElement('button');
+    toggle.className = 'toggle-attributes';
+
+    const toggleText = doc.createElement('span');
+    toggleText.textContent = 'Show Attributes';
+
+    const toggleIcon = doc.createElement('i');
+    toggleIcon.classList.add('toggle-icon');
+    toggleIcon.classList.add('material-symbols-outlined');
+    toggleIcon.textContent = 'ARROW_RIGHT';
+
+    const iconContainer = doc.createElement('div');
+    iconContainer.className = 'result-icons';
+
+    icons.forEach(name => {
+        let icon = doc.createElement('i');
+        icon.classList.add('result-icon');
+        icon.classList.add('material-symbols-outlined');
+        icon.textContent = name;
+        iconContainer.appendChild(icon);
+    });
     
-    const button = doc.createElement('button');
-    button.classList.add('copy-side-button');
-    button.textContent = 'Copy';
+    const copyButton = doc.createElement('button');
+    copyButton.classList.add('result-copy');
+    copyButton.classList.add('material-symbols-outlined')
+    copyButton.textContent = 'content_copy';
     
-    container.appendChild(text);
-    container.appendChild(button);
-    resultsContainer.appendChild(container);
+    toggle.appendChild(toggleText);
+    toggle.appendChild(toggleIcon);
+
+    text.appendChild(title);
+    text.appendChild(toggle);
+
+    body.appendChild(text);
+    body.appendChild(iconContainer);
+    body.appendChild(copyButton);
+    
+    article.appendChild(body);
+    resultsContainer.appendChild(article);
 }
 
 

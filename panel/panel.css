@@ -199,3 +199,12 @@ body {
 .material-symbols-outlined {
     font-size: 100px;
 }
+
+.results-iframe {
+    width: 50%; 
+    height: 100%;
+    border: 2px solid magenta;
+
+    border-radius: 0.25rem;;
+    border-radius: 0.25rem;
+}
