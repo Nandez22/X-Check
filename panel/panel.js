@@ -114,9 +114,11 @@ function displayResult(result) {
 
     const body = doc.createElement('div');
     body.className = 'result-row-body';
-    
     const text = doc.createElement('div');
     text.className = 'result-text';
+
+    const header = doc.createElement('div');
+    header.className = 'result-row-header';
 
     const title = doc.createElement('h3');
     title.className = 'result-title';
@@ -149,17 +151,24 @@ function displayResult(result) {
     copyButton.classList.add('material-symbols-outlined')
     copyButton.textContent = 'content_copy';
     
+    const attributes = doc.createElement('div');
+    attributes.className = 'attributes';
+    attributes.textContent = result.attributes
+
     toggle.appendChild(toggleText);
     toggle.appendChild(toggleIcon);
 
     text.appendChild(title);
     text.appendChild(toggle);
 
-    body.appendChild(text);
-    body.appendChild(iconContainer);
-    body.appendChild(copyButton);
-    
+    body.appendChild(header);
+    header.appendChild(text);
+    header.appendChild(iconContainer);
+    body.appendChild(attributes);
+
     article.appendChild(body);
+    article.appendChild(copyButton);
+
     resultsContainer.appendChild(article);
 }
 

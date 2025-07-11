@@ -1,27 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>X-Test</title>
         <link rel="stylesheet" href="panel.css">
-
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
-
     </head>
-
     <body>
-        <H3>X-Check</H3>
-
-        <div class = "xpath-input boxed vertical">
-            <div class="inline">
-                <input class="textField" type="text" id="xPath-Input" placeholder="xPath">
-                <button class="icon-button copy material-symbols-outlined" id="copy-xPath" title="Copy xPath">content_copy</button>
+        <div class="xpath-input-container">
+            <div class="input-box">
+                <input class="xpath-input" type="text" id="xPath-Input" placeholder="Enter XPath here">
+                <button class="copy-input-button material-symbols-outlined" id="copy-input" title="Copy XPath">CONTENT_COPY</button>
             </div>
-            <button class="icon-button expand material-symbols-outlined">arrow_drop_down</button>
+            <button class="input-expand-button material-symbols-outlined" id="expand-input">ARROW_DROP_DOWN</button>
         </div>
         
         <div id="results-container" class="results-container"><!-- container-->
@@ -51,7 +45,6 @@
                 <button class="result-copy material-symbols-outlined">content_copy</button>
             </article>
         </div>
-
-        <script type="module" src="panel.js"></script>
+        
     </body>
 </html>

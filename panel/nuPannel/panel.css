@@ -1,0 +1,88 @@
+:root {
+
+}
+
+body {
+    background-color: purple;
+    width: 350px;
+    margin: auto;
+}
+
+.xpath-input-container {
+    background-color: aquamarine;
+}
+
+.input-box {
+    background-color: bisque;
+    width: 100%;
+}
+
+.xpath-input {
+    background-color: chartreuse;
+}
+
+.copy-input-button {
+    background-color: darkcyan;
+}
+
+.input-expand-button {
+    background-color: darkgoldenrod;
+}
+
+.results-container {
+    background-color: blue;
+
+    gap: 10px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.result-row {
+    background-color: green;
+    display: flex;
+}
+
+.result-row-body {
+    background-color: yellow;
+
+}
+
+.result-row-header {
+    background-color: orange;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.result-text {
+    background-color: red;
+}
+
+.result-title {
+    background-color: hotpink;
+}
+
+.toggle-attributes {
+    background-color: lightcoral;
+}
+
+.toggle-icon {
+    background-color: brown;
+}
+
+.result-icons {
+    background-color: lightblue;
+}
+
+.result-icon {
+    background-color: crimson;
+}
+
+.attributes {
+    background-color: blueviolet;
+}
+
+.result-copy {
+    background-color: darkslateblue;
+}

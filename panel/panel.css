@@ -33,7 +33,6 @@ H3 {
 
 body {
     background: var(--dark);
-
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -60,11 +59,12 @@ body {
 }
 
 #results {
-    width: 85%;
+    width: 90%;
     height: 250px;
     padding-top: 25px;
 
     border: none;
+    display: block;
 }
 
 .xpath-input {
@@ -198,13 +198,4 @@ body {
 
 .material-symbols-outlined {
     font-size: 100px;
-}
-
-.results-iframe {
-    width: 50%; 
-    height: 100%;
-    border: 2px solid magenta;
-
-    border-radius: 0.25rem;;
-    border-radius: 0.25rem;
 }
