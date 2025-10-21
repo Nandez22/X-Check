@@ -1,0 +1,45 @@
+import { defineManifest } from '@crxjs/vite-plugin'
+
+export default defineManifest({
+    manifest_version: 2,
+    name: "X-Check",
+    version: "0.1",
+    description: "An actually usable XPath tester for Firefox?",
+
+    background: {
+      scripts: [
+        "scripts/background.js"
+      ]
+    },
+
+    content_scripts: [
+      {
+        matches: ["<all_urls>"],
+        js: ["scripts/xc-Agent.js"]
+      }
+    ],
+
+    browser_action: {
+      default_title: "X-Check"
+    },
+
+    sidebar_action: {
+      default_title: "X-Check",
+      default_panel: "panel/panel.html"
+    },
+
+    permissions: [
+      "tabs",
+      "activeTab",
+      "<all_urls>",
+      "*://*/*"
+    ],
+
+    web_accessible_resources: [
+      "panel/panel.html",
+      "panel/panel.css",
+      "panel/panel.js",
+
+      "resources/xc-Styles.css"
+    ]
+})
